@@ -24,7 +24,7 @@ export function IdeasList() {
       itemLayout="horizontal"
       dataSource={data}
       renderItem={(item) => (
-        <List.Item>
+        <List.Item className="list-item-container">
           <List.Item.Meta title={item.text} description={item.date} />
         </List.Item>
       )}
