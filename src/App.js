@@ -8,7 +8,6 @@ import { Content, Header } from "antd/lib/layout/layout";
 function App() {
   return (
     <div className="App">
-      {/* <div className="content"> */}
       <Layout className="content">
         <Header>
           <SiteHeader />
@@ -18,7 +17,6 @@ function App() {
           <IdeasList />
         </Content>
       </Layout>
-      {/* </div> */}
     </div>
   );
 }
