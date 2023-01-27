@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# Idears
+
+A place to save your ideas and see other people's ideas.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
