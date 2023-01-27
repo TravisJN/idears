@@ -1,17 +1,28 @@
-import { List } from "antd";
+import { List, Button, Divider, Popconfirm } from "antd";
+import { DeleteTwoTone } from "@ant-design/icons";
 import { db } from "../firestore";
-import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
+import {
+  collection,
+  query,
+  onSnapshot,
+  orderBy,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
+import * as dayjs from "dayjs";
+
+const COLLECTION = "ideas";
 
 export function IdeasList() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const q = query(collection(db, "ideas"), orderBy("date", "desc"));
+    const q = query(collection(db, COLLECTION), orderBy("date", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const ideas = [];
       snapshot.forEach((doc) => {
-        ideas.push(doc.data());
+        ideas.push({ ...doc.data(), id: doc.id });
       });
       setData(ideas);
     });
@@ -19,15 +30,38 @@ export function IdeasList() {
     return unsubscribe;
   }, []);
 
+  const handleDelete = async (item) => {
+    try {
+      await deleteDoc(doc(db, COLLECTION, item.id));
+    } catch (err) {
+      alert("Error deleting idea. soz");
+    }
+  };
+
+  const renderListItem = (item) => (
+    <List.Item
+      className="list-item-container"
+      actions={[<p>writing</p>, <p>science</p>, <p>climate</p>]}
+    >
+      <List.Item.Meta
+        title={item.text}
+        description={dayjs(item.date).format("MMM DD YYYY")}
+      />
+      <Divider />
+      <Popconfirm
+        title="Delete this idea?"
+        onConfirm={(e) => handleDelete(item)}
+        okText="Yes"
+        cancelText="No"
+      >
+        <Button shape="circle" type="ghost" className="delete-button">
+          <DeleteTwoTone twoToneColor="#eb2f96" />
+        </Button>
+      </Popconfirm>
+    </List.Item>
+  );
+
   return (
-    <List
-      itemLayout="horizontal"
-      dataSource={data}
-      renderItem={(item) => (
-        <List.Item className="list-item-container">
-          <List.Item.Meta title={item.text} description={item.date} />
-        </List.Item>
-      )}
-    />
+    <List itemLayout="vertical" dataSource={data} renderItem={renderListItem} />
   );
 }

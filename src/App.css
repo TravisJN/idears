@@ -41,5 +41,9 @@
 .list-item-container {
   padding-left: 10px;
   padding-right: 10px;
-  border: 1px solid lightgray;
+  background-color: white;
+}
+
+.delete-button {
+  float: right;
 }
