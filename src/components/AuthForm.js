@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
 import "./AuthForm.css";
 
-export function AuthForm({ onFinish }) {
+export function AuthForm({ onFinish, isSignUp }) {
   return (
     <Form
       name="normal_login"
@@ -41,21 +42,42 @@ export function AuthForm({ onFinish }) {
           placeholder="Password"
         />
       </Form.Item>
-      <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox>Remember me</Checkbox>
+      {isSignUp ? (
+        <Form.Item
+          name="confirm"
+          rules={[
+            {
+              required: true,
+              message: "Please confirm your Password!",
+            },
+          ]}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Confirm Password"
+          />
         </Form.Item>
+      ) : (
+        <Form.Item>
+          <Form.Item name="remember" valuePropName="checked" noStyle>
+            <Checkbox>Remember me</Checkbox>
+          </Form.Item>
 
-        <a className="login-form-forgot" href="">
-          Forgot password
-        </a>
-      </Form.Item>
-
+          <a className="login-form-forgot" href="/">
+            Forgot password
+          </a>
+        </Form.Item>
+      )}
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
-          Log in
+          {isSignUp ? "Sign up" : "Log in"}
         </Button>
-        Or <a href="">register now!</a>
+        {isSignUp ? (
+          <Link to={`/login`}>Already have an account?</Link>
+        ) : (
+          <Link to={`/signup`}>register now!</Link>
+        )}
       </Form.Item>
     </Form>
   );
