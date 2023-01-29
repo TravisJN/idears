@@ -3,7 +3,8 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./App";
-import ErrorPage from "./routes/ErrorPage.js";
+import ErrorPage from "./routes/ErrorPage";
+import Auth from "./routes/Auth";
 import reportWebVitals from "./reportWebVitals";
 import "./firestore";
 
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
+  },
+  {
+    path: "/login",
+    element: <Auth />,
   },
 ]);
 
