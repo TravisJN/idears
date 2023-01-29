@@ -2,8 +2,9 @@ import "./App.css";
 import { IdeasList } from "./components/IdeasList";
 import { AddIdea } from "./components/AddIdea";
 import { SiteHeader } from "./components/SiteHeader";
+import { SiteFooter } from "./components/SiteFooter";
 import { Layout } from "antd";
-import { Content, Header } from "antd/lib/layout/layout";
+import { Content, Header, Footer } from "antd/lib/layout/layout";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
           <AddIdea />
           <IdeasList />
         </Content>
+        <Footer>
+          <SiteFooter />
+        </Footer>
       </Layout>
     </div>
   );
