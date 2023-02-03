@@ -14,17 +14,21 @@ export function AuthForm({ onFinish, isSignUp }) {
       onFinish={onFinish}
     >
       <Form.Item
-        name="username"
+        name="email"
         rules={[
           {
+            type: "email",
+            message: "Please enter a valid email address",
+          },
+          {
             required: true,
-            message: "Please input your Username!",
+            message: "Please input your Email",
           },
         ]}
       >
         <Input
           prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Username"
+          placeholder="Email"
         />
       </Form.Item>
       <Form.Item
@@ -32,7 +36,7 @@ export function AuthForm({ onFinish, isSignUp }) {
         rules={[
           {
             required: true,
-            message: "Please input your Password!",
+            message: "Please input your Password",
           },
         ]}
       >
@@ -45,11 +49,21 @@ export function AuthForm({ onFinish, isSignUp }) {
       {isSignUp ? (
         <Form.Item
           name="confirm"
+          dependencies={["password"]}
+          hasFeedback
           rules={[
             {
               required: true,
-              message: "Please confirm your Password!",
+              message: "Please confirm your password",
             },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("password") === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error("Passwords do not match"));
+              },
+            }),
           ]}
         >
           <Input
