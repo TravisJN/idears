@@ -1,4 +1,5 @@
-import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthForm } from "../components/AuthForm";
 import "./Auth.css";
 import {
@@ -11,6 +12,9 @@ const auth = getAuth();
 
 export default function Auth() {
   const { pathname } = useLocation();
+  let navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const isSignUp = pathname === "/signup";
 
   const onFinish = (values) => {
@@ -21,11 +25,15 @@ export default function Auth() {
           // Account created
           const user = userCredential.user;
           console.log(user);
+          navigate("/");
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(`A ${errorCode} error has occurred: ${errorMessage}`);
+          setErrorMessage(
+            "An error occurred while creating your account. Please try again."
+          );
         });
     } else {
       signInWithEmailAndPassword(auth, email, password)
@@ -33,11 +41,15 @@ export default function Auth() {
           // Signed in
           const user = userCredential.user;
           console.log(user);
+          navigate("/");
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(`A ${errorCode} error has occurred: ${errorMessage}`);
+          setErrorMessage(
+            "An error occurred while signing you in. Please try again."
+          );
         });
       // log in
     }
@@ -45,7 +57,11 @@ export default function Auth() {
 
   return (
     <div className="auth-page-container">
-      <AuthForm onFinish={onFinish} isSignUp={isSignUp} />
+      <AuthForm
+        onFinish={onFinish}
+        isSignUp={isSignUp}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 }

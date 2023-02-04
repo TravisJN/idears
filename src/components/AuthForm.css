@@ -10,3 +10,12 @@
 .login-form-button {
   width: 100%;
 }
+.auth-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.auth-form-error-text {
+  color: red;
+}
