@@ -41,7 +41,12 @@ export function IdeasList() {
   const renderListItem = (item) => (
     <List.Item
       className="list-item-container"
-      actions={[<p>writing</p>, <p>science</p>, <p>climate</p>]}
+      actions={[
+        <p key="action1">writing</p>,
+        <p key="action2">science</p>,
+        <p key="action3">climate</p>,
+      ]}
+      key={item.id}
     >
       <List.Item.Meta
         title={item.text}
