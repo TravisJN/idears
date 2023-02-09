@@ -3,3 +3,10 @@
   align-self: flex-end;
   padding-right: 15px;
 }
+
+.user-button {
+  color: lightblue;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
