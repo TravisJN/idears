@@ -28,7 +28,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className="content">
       <SiteHeader user={user} />
       <AddIdea />
       <IdeasList />
