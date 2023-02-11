@@ -24,7 +24,6 @@ export default function Auth() {
         .then((userCredential) => {
           // Account created
           const user = userCredential.user;
-          console.log(user);
           navigate("/");
         })
         .catch((error) => {
@@ -40,7 +39,6 @@ export default function Auth() {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
           navigate("/");
         })
         .catch((error) => {

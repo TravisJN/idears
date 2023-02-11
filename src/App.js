@@ -14,7 +14,6 @@ function App() {
   useEffect(() => {
     const authListener = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
-        console.log(firebaseUser);
         setUser(firebaseUser);
         // ...
       } else {

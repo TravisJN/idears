@@ -1,0 +1,22 @@
+.add-idea-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+}
+
+.add-idea-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-idea-form-error-text {
+  color: red;
+}
+
+.add-idea-form-input {
+  width: 100%;
+}

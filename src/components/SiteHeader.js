@@ -11,7 +11,7 @@ export function SiteHeader({ user }) {
           rotate={-15}
           className="header-icon"
         />
-        <p className="header-title">Ideas</p>
+        <p className="header-title">outofinsight</p>
         <BulbTwoTone twoToneColor="white" rotate={15} className="header-icon" />
       </div>
       <User user={user} />
