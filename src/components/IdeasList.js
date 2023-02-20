@@ -14,7 +14,7 @@ import * as dayjs from "dayjs";
 
 const COLLECTION = "ideas";
 
-export function IdeasList() {
+export function IdeasList({ userId }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -34,37 +34,43 @@ export function IdeasList() {
     try {
       await deleteDoc(doc(db, COLLECTION, item.id));
     } catch (err) {
-      alert("Error deleting idea. soz");
+      alert(`Error deleting idea: ${err.message}`);
     }
   };
 
-  const renderListItem = (item) => (
-    <List.Item
-      className="list-item-container"
-      actions={[
-        <p key="action1">writing</p>,
-        <p key="action2">science</p>,
-        <p key="action3">climate</p>,
-      ]}
-      key={item.id}
-    >
-      <List.Item.Meta
-        title={item.text}
-        description={dayjs(item.date).format("MMM DD YYYY")}
-      />
-      <Divider />
-      <Popconfirm
-        title="Delete this idea?"
-        onConfirm={(e) => handleDelete(item)}
-        okText="Yes"
-        cancelText="No"
+  const renderListItem = (item) => {
+    const isAuthor = item.author_id === userId;
+
+    return (
+      <List.Item
+        className="list-item-container"
+        actions={[
+          <p key="action1">writing</p>,
+          <p key="action2">science</p>,
+          <p key="action3">climate</p>,
+        ]}
+        key={item.id}
       >
-        <Button shape="circle" type="ghost" className="delete-button">
-          <DeleteTwoTone twoToneColor="#eb2f96" />
-        </Button>
-      </Popconfirm>
-    </List.Item>
-  );
+        <List.Item.Meta
+          title={item.text}
+          description={dayjs(item.date).format("MMM DD YYYY")}
+        />
+        <Divider />
+        {isAuthor && (
+          <Popconfirm
+            title="Delete this idea?"
+            onConfirm={(e) => handleDelete(item)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button shape="circle" type="ghost" className="delete-button">
+              <DeleteTwoTone twoToneColor="#eb2f96" />
+            </Button>
+          </Popconfirm>
+        )}
+      </List.Item>
+    );
+  };
 
   return (
     <List itemLayout="vertical" dataSource={data} renderItem={renderListItem} />

@@ -29,8 +29,8 @@ function App() {
   return (
     <div className="content">
       <SiteHeader user={user} />
-      <AddIdea />
-      <IdeasList />
+      <AddIdea userId={user?.uid} />
+      <IdeasList userId={user?.uid} />
       <SiteFooter />
     </div>
   );

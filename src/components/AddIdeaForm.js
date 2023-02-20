@@ -1,24 +1,22 @@
 import { useState } from "react";
 import { Button, Form, Input } from "antd";
 import "./AddIdeaForm.css";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../firestore";
 
 const { TextArea } = Input;
 
-export function AddIdeaForm({ errorMessage }) {
+export function AddIdeaForm({ onSubmit, errorMessage }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
 
   const handleSubmit = async (values) => {
-    const { idea } = values;
-    try {
-      setIsLoading(true);
-      await addDoc(collection(db, "ideas"), { text: idea, date: Date.now() });
-    } catch (err) {
-      console.log(err);
+    setIsLoading(true);
+
+    const success = await onSubmit(values);
+
+    if (success) {
+      form.resetFields();
     }
-    form.resetFields();
+
     setIsLoading(false);
   };
 
