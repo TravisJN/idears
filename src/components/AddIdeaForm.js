@@ -9,9 +9,11 @@ export function AddIdeaForm({ onSubmit, errorMessage }) {
   let skipSubmit = false;
 
   const [isLoading, setIsLoading] = useState(false);
+  const [tags, setTags] = useState([]);
+
   const [form] = Form.useForm();
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async ({ idea }) => {
     if (skipSubmit) {
       skipSubmit = false;
       return;
@@ -19,16 +21,20 @@ export function AddIdeaForm({ onSubmit, errorMessage }) {
 
     setIsLoading(true);
 
-    const success = await onSubmit(values);
+    const success = await onSubmit({ idea, tags });
 
     if (success) {
       form.resetFields();
+      setTags([]);
     }
 
     setIsLoading(false);
   };
 
-  const onTagEnterPress = () => (skipSubmit = true);
+  const onTagEnterPress = (newTag) => {
+    skipSubmit = true;
+    setTags([...tags, newTag]);
+  };
 
   return (
     <div className="add-idea-form-container">
@@ -55,7 +61,7 @@ export function AddIdeaForm({ onSubmit, errorMessage }) {
         </Form.Item>
 
         <Form.Item className="add-idea-form-input" name="tags">
-          <AddTags onPressEnter={onTagEnterPress} />
+          <AddTags onPressEnter={onTagEnterPress} tags={tags} />
         </Form.Item>
 
         <Form.Item>

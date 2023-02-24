@@ -8,10 +8,12 @@ const { Panel } = Collapse;
 
 export function AddIdea({ userId }) {
   const [errorMessage, setErrorMessage] = useState(null);
+
   const onSubmit = async (values) => {
-    const { idea } = values;
+    const { idea, tags } = values;
     setErrorMessage(null);
 
+    // TODO: Create/set Tag document on firestore at same time as adding idea doc
     try {
       await addDoc(collection(db, "ideas"), {
         text: idea,

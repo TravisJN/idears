@@ -1,12 +1,9 @@
 import { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../firestore";
 import { Input } from "antd";
 import "./AddTags.css";
 
-export function AddTags({ onPressEnter }) {
+export function AddTags({ onPressEnter, tags }) {
   const [inputText, setInputText] = useState("");
-  const [tags, setTags] = useState([]);
 
   const onTextChange = (e) => {
     setInputText(e.target.value);
@@ -14,9 +11,8 @@ export function AddTags({ onPressEnter }) {
 
   const handlePressEnter = () => {
     // save the current text as a tag
-    setTags([...tags, inputText]);
     setInputText("");
-    onPressEnter();
+    onPressEnter(inputText);
   };
 
   const renderTags = () => {
