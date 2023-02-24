@@ -1,14 +1,22 @@
 import { useState } from "react";
 import { Button, Form, Input } from "antd";
 import "./AddIdeaForm.css";
+import { AddTags } from "./AddTags";
 
 const { TextArea } = Input;
 
 export function AddIdeaForm({ onSubmit, errorMessage }) {
+  let skipSubmit = false;
+
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
 
   const handleSubmit = async (values) => {
+    if (skipSubmit) {
+      skipSubmit = false;
+      return;
+    }
+
     setIsLoading(true);
 
     const success = await onSubmit(values);
@@ -19,6 +27,8 @@ export function AddIdeaForm({ onSubmit, errorMessage }) {
 
     setIsLoading(false);
   };
+
+  const onTagEnterPress = () => (skipSubmit = true);
 
   return (
     <div className="add-idea-form-container">
@@ -41,7 +51,11 @@ export function AddIdeaForm({ onSubmit, errorMessage }) {
             },
           ]}
         >
-          <TextArea placeholder="Enter your idea" autoSize />
+          <TextArea placeholder="Enter your idea" rows={2} />
+        </Form.Item>
+
+        <Form.Item className="add-idea-form-input" name="tags">
+          <AddTags onPressEnter={onTagEnterPress} />
         </Form.Item>
 
         <Form.Item>
