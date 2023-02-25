@@ -3,4 +3,9 @@
   padding: 4px;
   padding-top: 2px;
   padding-bottom: 2px;
+  cursor: pointer;
+}
+
+.tag-input {
+  height: 40px;
 }
