@@ -40,20 +40,19 @@ export function IdeasList({ userId }) {
 
   const renderListItem = (item) => {
     const isAuthor = item.author_id === userId;
+    const tags = item?.tags ? Object.keys(item.tags) : [];
 
     return (
       <List.Item
         className="list-item-container"
-        actions={[
-          <p key="action1">writing</p>,
-          <p key="action2">science</p>,
-          <p key="action3">climate</p>,
-        ]}
+        actions={tags.map((tag) => (
+          <p key={tag}>{tag}</p>
+        ))}
         key={item.id}
       >
         <List.Item.Meta
           title={item.text}
-          description={dayjs(item.date).format("MMM DD YYYY")}
+          description={dayjs(item.date?.toDate?.()).format("MMM DD YYYY")}
         />
         <Divider />
         {isAuthor && (

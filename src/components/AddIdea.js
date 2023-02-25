@@ -22,32 +22,18 @@ export function AddIdea({ userId }) {
     setErrorMessage(null);
 
     try {
+      const tagsMap = tags.reduce((map, tag) => {
+        map[tag] = true;
+        return map;
+      }, {});
+      console.log(tagsMap);
       // First add the idea doc
       const ideaDoc = await addDoc(collection(db, "ideas"), {
         text: idea,
         date: serverTimestamp(),
         author_id: userId,
+        tags: tagsMap ?? {},
       });
-
-      // Loop through each of the tags and create/set docs for each one
-      await Promise.all(
-        // need to use map here for async to work
-        tags.map(async (tag) => {
-          await runTransaction(db, async (transaction) => {
-            const tagDoc = await transaction.get(doc(db, "tags", tag));
-            if (!tagDoc.exists()) {
-              await transaction.set(doc(db, "tags", tag), {
-                created_at: serverTimestamp(),
-                idea_ids: [ideaDoc.id],
-              });
-            } else {
-              await transaction.update(doc(db, "tags", tag), {
-                idea_ids: arrayUnion(ideaDoc.id),
-              });
-            }
-          });
-        })
-      );
 
       return true;
     } catch (err) {
