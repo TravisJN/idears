@@ -3,7 +3,6 @@ import "./App.css";
 import { IdeasList } from "./components/IdeasList";
 import { AddIdea } from "./components/AddIdea";
 import { SiteHeader } from "./components/SiteHeader";
-import { SiteFooter } from "./components/SiteFooter";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const auth = getAuth();
@@ -31,7 +30,6 @@ function App() {
       <SiteHeader user={user} />
       {!!user && <AddIdea userId={user?.uid} />}
       <IdeasList userId={user?.uid} />
-      <SiteFooter />
     </div>
   );
 }

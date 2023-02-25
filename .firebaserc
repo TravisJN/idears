@@ -1,5 +1,6 @@
 {
   "projects": {
-    "idears": "idears-b7402"
+    "idears": "idears-b7402",
+    "default": "idears-b7402"
   }
 }
