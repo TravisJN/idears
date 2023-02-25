@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   background-color: rgb(0, 0, 70);
+  padding-top: 20px;
 }
 
 .header-title-container {
@@ -14,7 +15,8 @@
 
 .header-title {
   color: white;
-  font-size: x-large;
+  font-size: xx-large;
+  font-family: courier, monospace;
 }
 
 .header-icon {
