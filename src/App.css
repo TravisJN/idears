@@ -5,6 +5,7 @@
   margin-right: auto;
   width: 60%;
   min-width: 320px;
+  font-family: monaco, monospace;
 }
 
 .add-idea-container {

@@ -43,11 +43,19 @@ export function AddIdea({ userId }) {
     }
   };
 
+  const onResetForm = () => {
+    setErrorMessage("");
+  };
+
   return (
     <div className="add-idea-container">
-      <Collapse defaultActiveKey={["1"]} ghost>
+      <Collapse defaultActiveKey={["1"]} bordered>
         <Panel header="Add Idea" key="1">
-          <AddIdeaForm onSubmit={onSubmit} errorMessage={errorMessage} />
+          <AddIdeaForm
+            onSubmit={onSubmit}
+            errorMessage={errorMessage}
+            onResetForm={onResetForm}
+          />
         </Panel>
       </Collapse>
     </div>

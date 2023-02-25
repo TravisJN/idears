@@ -29,7 +29,7 @@ function App() {
   return (
     <div className="content">
       <SiteHeader user={user} />
-      <AddIdea userId={user?.uid} />
+      {!!user && <AddIdea userId={user?.uid} />}
       <IdeasList userId={user?.uid} />
       <SiteFooter />
     </div>

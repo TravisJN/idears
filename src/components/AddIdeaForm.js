@@ -5,12 +5,18 @@ import { AddTags } from "./AddTags";
 
 const { TextArea } = Input;
 
-export function AddIdeaForm({ onSubmit, errorMessage }) {
+export function AddIdeaForm({ onSubmit, errorMessage, onResetForm }) {
   let skipSubmit = useRef(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [tags, setTags] = useState([]);
   const [form] = Form.useForm();
+
+  const resetForm = () => {
+    form.resetFields();
+    setTags([]);
+    onResetForm();
+  };
 
   const handleSubmit = async ({ idea }) => {
     if (skipSubmit.current) {
@@ -23,8 +29,7 @@ export function AddIdeaForm({ onSubmit, errorMessage }) {
     const success = await onSubmit({ idea, tags });
 
     if (success) {
-      form.resetFields();
-      setTags([]);
+      resetForm();
     }
 
     setIsLoading(false);
@@ -65,7 +70,7 @@ export function AddIdeaForm({ onSubmit, errorMessage }) {
             },
           ]}
         >
-          <TextArea placeholder="Enter your idea" rows={2} />
+          <TextArea placeholder="Enter your idea" rows={3} />
         </Form.Item>
 
         <Form.Item className="add-idea-form-input" name="tags">
@@ -77,6 +82,15 @@ export function AddIdeaForm({ onSubmit, errorMessage }) {
         </Form.Item>
 
         <Form.Item>
+          <Button
+            type="secondary"
+            onClick={resetForm}
+            className="add-idea-form-button"
+            disabled={isLoading}
+          >
+            Reset
+          </Button>
+
           <Button
             type="primary"
             htmlType="submit"

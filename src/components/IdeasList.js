@@ -40,7 +40,7 @@ export function IdeasList({ userId }) {
 
   const renderListItem = (item) => {
     const isAuthor = item.author_id === userId;
-    const tags = item?.tags ? Object.keys(item.tags) : [];
+    const tags = item?.tags ? Object.keys(item.tags) : ["No Tags"];
 
     return (
       <List.Item
@@ -51,10 +51,9 @@ export function IdeasList({ userId }) {
         key={item.id}
       >
         <List.Item.Meta
-          title={item.text}
           description={dayjs(item.date?.toDate?.()).format("MMM DD YYYY")}
         />
-        <Divider />
+        {item.text}
         {isAuthor && (
           <Popconfirm
             title="Delete this idea?"
@@ -72,6 +71,12 @@ export function IdeasList({ userId }) {
   };
 
   return (
-    <List itemLayout="vertical" dataSource={data} renderItem={renderListItem} />
+    <List
+      itemLayout="vertical"
+      dataSource={data}
+      renderItem={renderListItem}
+      bordered
+      loading={!data?.length}
+    />
   );
 }
