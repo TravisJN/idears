@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { Collapse } from "antd";
 import { AddIdeaForm } from "./AddIdeaForm";
-import { collection, addDoc } from "firebase/firestore";
+import {
+  doc,
+  collection,
+  addDoc,
+  setDoc,
+  runTransaction,
+  serverTimestamp,
+  arrayUnion,
+} from "firebase/firestore";
 import { db } from "../firestore";
 
 const { Panel } = Collapse;
@@ -13,13 +21,34 @@ export function AddIdea({ userId }) {
     const { idea, tags } = values;
     setErrorMessage(null);
 
-    // TODO: Create/set Tag document on firestore at same time as adding idea doc
     try {
-      await addDoc(collection(db, "ideas"), {
+      // First add the idea doc
+      const ideaDoc = await addDoc(collection(db, "ideas"), {
         text: idea,
-        date: Date.now(),
+        date: serverTimestamp(),
         author_id: userId,
       });
+
+      // Loop through each of the tags and create/set docs for each one
+      await Promise.all(
+        // need to use map here for async to work
+        tags.map(async (tag) => {
+          await runTransaction(db, async (transaction) => {
+            const tagDoc = await transaction.get(doc(db, "tags", tag));
+            if (!tagDoc.exists()) {
+              await transaction.set(doc(db, "tags", tag), {
+                created_at: serverTimestamp(),
+                idea_ids: [ideaDoc.id],
+              });
+            } else {
+              await transaction.update(doc(db, "tags", tag), {
+                idea_ids: arrayUnion(ideaDoc.id),
+              });
+            }
+          });
+        })
+      );
+
       return true;
     } catch (err) {
       console.log(err);

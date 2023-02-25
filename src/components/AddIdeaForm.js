@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button, Form, Input } from "antd";
 import "./AddIdeaForm.css";
 import { AddTags } from "./AddTags";
@@ -6,7 +6,7 @@ import { AddTags } from "./AddTags";
 const { TextArea } = Input;
 
 export function AddIdeaForm({ onSubmit, errorMessage }) {
-  let skipSubmit = false;
+  let skipSubmit = useRef(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [tags, setTags] = useState([]);
@@ -14,8 +14,8 @@ export function AddIdeaForm({ onSubmit, errorMessage }) {
   const [form] = Form.useForm();
 
   const handleSubmit = async ({ idea }) => {
-    if (skipSubmit) {
-      skipSubmit = false;
+    if (skipSubmit.current) {
+      skipSubmit.current = false;
       return;
     }
 
@@ -32,7 +32,7 @@ export function AddIdeaForm({ onSubmit, errorMessage }) {
   };
 
   const onTagEnterPress = (newTag) => {
-    skipSubmit = true;
+    skipSubmit.current = true;
     setTags([...tags, newTag]);
   };
 
