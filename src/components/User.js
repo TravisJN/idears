@@ -1,12 +1,20 @@
 import "./User.css";
 import { getAuth, signOut } from "firebase/auth";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const auth = getAuth();
 
 export default function User({ user }) {
+  const { pathname } = useLocation();
   const handleLogOut = () => {
     signOut(auth);
+  };
+
+  const renderHeaderLink = () => {
+    if (pathname === "/login" || pathname === "/signup") {
+      return <Link to="/">Home</Link>;
+    }
+    return <Link to="/signup">Authenticate</Link>;
   };
 
   return (
@@ -19,7 +27,7 @@ export default function User({ user }) {
           </button>
         </div>
       ) : (
-        <Link to="/login">Log In</Link>
+        renderHeaderLink()
       )}
     </div>
   );

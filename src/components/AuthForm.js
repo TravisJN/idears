@@ -13,9 +13,11 @@ export function AuthForm({ onFinish, isSignUp, errorMessage }) {
           remember: true,
         }}
         onFinish={onFinish}
+        layout="vertical"
       >
         <Form.Item
           name="email"
+          label="Email"
           rules={[
             {
               type: "email",
@@ -27,10 +29,7 @@ export function AuthForm({ onFinish, isSignUp, errorMessage }) {
             },
           ]}
         >
-          <Input
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Email"
-          />
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} />
         </Form.Item>
         <Form.Item
           name="password"
@@ -40,16 +39,17 @@ export function AuthForm({ onFinish, isSignUp, errorMessage }) {
               message: "Please input your Password",
             },
           ]}
+          label="Password"
         >
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
-            placeholder="Password"
           />
         </Form.Item>
         {isSignUp ? (
           <Form.Item
             name="confirm"
+            label="Confirm Password"
             dependencies={["password"]}
             hasFeedback
             rules={[
@@ -70,7 +70,6 @@ export function AuthForm({ onFinish, isSignUp, errorMessage }) {
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
-              placeholder="Confirm Password"
             />
           </Form.Item>
         ) : (
@@ -95,7 +94,7 @@ export function AuthForm({ onFinish, isSignUp, errorMessage }) {
           {isSignUp ? (
             <Link to={`/login`}>Already have an account?</Link>
           ) : (
-            <Link to={`/signup`}>register now!</Link>
+            <Link to={`/signup`}>No account? Sign up!</Link>
           )}
         </Form.Item>
       </Form>

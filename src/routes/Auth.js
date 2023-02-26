@@ -8,6 +8,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { getAnalytics, logEvent } from "firebase/analytics";
+import { SiteHeader } from "../components/SiteHeader";
 
 const auth = getAuth();
 
@@ -68,12 +69,15 @@ export default function Auth() {
   };
 
   return (
-    <div className="auth-page-container">
-      <AuthForm
-        onFinish={onFinish}
-        isSignUp={isSignUp}
-        errorMessage={errorMessage}
-      />
+    <div className="content">
+      <SiteHeader />
+      <div className="auth-page-container">
+        <AuthForm
+          onFinish={onFinish}
+          isSignUp={isSignUp}
+          errorMessage={errorMessage}
+        />
+      </div>
     </div>
   );
 }
