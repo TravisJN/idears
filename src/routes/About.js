@@ -1,7 +1,16 @@
+import { useEffect } from "react";
 import "./About.css";
+import { getAnalytics, logEvent } from "firebase/analytics";
 import { SiteHeader } from "../components/SiteHeader";
 
 export default function Auth() {
+  useEffect(() => {
+    const analytics = getAnalytics();
+    logEvent(analytics, "screen_view", {
+      firebase_screen: "About",
+    });
+  }, []);
+
   return (
     <div className="content">
       <SiteHeader />
