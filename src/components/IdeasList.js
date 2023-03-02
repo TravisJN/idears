@@ -1,4 +1,4 @@
-import { List, Button, Divider, Popconfirm } from "antd";
+import { List, Button, Popconfirm } from "antd";
 import { DeleteTwoTone } from "@ant-design/icons";
 import { db } from "../firestore";
 import {
@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import * as dayjs from "dayjs";
+import "./IdeasList.css";
 
 const COLLECTION = "ideas";
 
@@ -53,7 +54,7 @@ export function IdeasList({ userId }) {
         <List.Item.Meta
           description={dayjs(item.date?.toDate?.()).format("MMM DD YYYY")}
         />
-        {item.text}
+        <p className="idea-item-text">{item.text}</p>
         {isAuthor && (
           <Popconfirm
             title="Delete this idea?"
