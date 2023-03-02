@@ -14,7 +14,7 @@ export function SiteHeader({ user }) {
       </div>
       <div className="header-button-container">
         {isAbout ? <Link to="/">Home</Link> : <Link to="/about">About</Link>}
-        <User user={user} />
+        {!isAbout && <User user={user} />}
       </div>
     </div>
   );
