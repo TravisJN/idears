@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 
 // config
@@ -19,3 +19,8 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const analytics = getAnalytics(app);
+
+// Local emulators
+// Uncomment to use local emulators
+// connectFirestoreEmulator(db, "localhost", 8080);
+// connectAuthEmulator(auth, "http://localhost:9099");

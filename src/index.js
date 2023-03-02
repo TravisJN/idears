@@ -7,6 +7,7 @@ import ErrorPage from "./routes/ErrorPage";
 import Auth from "./routes/Auth";
 import reportWebVitals from "./reportWebVitals";
 import "./firestore";
+import About from "./routes/About";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Auth />,
+  },
+  {
+    path: "/about",
+    element: <About />,
   },
 ]);
 

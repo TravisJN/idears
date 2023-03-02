@@ -1,0 +1,12 @@
+.about-page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5em;
+  background-color: white;
+  border: 1px solid gainsboro;
+}
+
+.about-page-text-container {
+  padding-bottom: 20px;
+}
