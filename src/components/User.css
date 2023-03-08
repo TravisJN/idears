@@ -1,11 +1,3 @@
 .user-container {
-  color: white;
   align-self: flex-end;
-}
-
-.user-button {
-  color: lightblue;
-  background: none;
-  border: none;
-  cursor: pointer;
 }

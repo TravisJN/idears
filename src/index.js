@@ -27,6 +27,10 @@ const router = createBrowserRouter([
     path: "/about",
     element: <About />,
   },
+  {
+    path: "/mine",
+    element: <App />, // TODO: Add list filter to only show user's ideas
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
