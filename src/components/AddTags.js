@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Input } from "antd";
+import { Input, Tag } from "antd";
 import "./AddTags.css";
 
 export function AddTags({ onPressEnter, onDeleteTag, tags }) {
@@ -17,13 +17,9 @@ export function AddTags({ onPressEnter, onDeleteTag, tags }) {
 
   const renderTags = () => {
     return tags.map((tag) => (
-      <div // should probably be a button element but I don't want it to be selected when Enter is pressed
-        key={tag}
-        className="tag-item-container"
-        onClick={() => onDeleteTag(tag)}
-      >
+      <Tag key={tag} closable onClose={() => onDeleteTag(tag)}>
         {tag}
-      </div>
+      </Tag>
     ));
   };
 
