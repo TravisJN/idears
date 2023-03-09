@@ -29,7 +29,7 @@ export function AddTags({ onPressEnter, onDeleteTag, tags }) {
       value={inputText}
       onChange={onTextChange}
       onPressEnter={handlePressEnter}
-      placeholder={"Tags"}
+      placeholder={"Tags (press enter)"}
       className="tag-input"
     />
   );

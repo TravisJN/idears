@@ -41,7 +41,7 @@ export default function User({ user }) {
     if (pathname === "/login" || pathname === "/signup") {
       return <Link to="/">Home</Link>;
     }
-    return <Link to="/signup">Authenticate</Link>;
+    return <Link to="/login">Authenticate</Link>;
   };
 
   const renderUser = () => {
