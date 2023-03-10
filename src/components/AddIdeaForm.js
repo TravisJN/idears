@@ -83,15 +83,6 @@ export function AddIdeaForm({ onSubmit, errorMessage, onResetForm }) {
 
         <Form.Item>
           <Button
-            type="secondary"
-            onClick={resetForm}
-            className="add-idea-form-button"
-            disabled={isLoading}
-          >
-            Reset
-          </Button>
-
-          <Button
             type="primary"
             htmlType="submit"
             className="add-idea-form-button"
