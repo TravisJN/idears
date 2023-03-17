@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Button, Form, Input } from "antd";
 import "./AddIdeaForm.css";
 import { SelectTags } from "./SelectTags";
@@ -10,23 +10,26 @@ export function AddIdeaForm({ onSubmit, errorMessage, onResetForm }) {
   const [tags, setTags] = useState([]);
   const [form] = Form.useForm();
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     form.resetFields();
     setTags([]);
     onResetForm();
-  };
+  }, [form, setTags, onResetForm]);
 
-  const handleSubmit = async ({ idea }) => {
-    setIsLoading(true);
+  const handleSubmit = useCallback(
+    async ({ idea }) => {
+      setIsLoading(true);
 
-    const success = await onSubmit({ idea, tags });
+      const success = await onSubmit({ idea, tags });
 
-    if (success) {
-      resetForm();
-    }
+      if (success) {
+        resetForm();
+      }
 
-    setIsLoading(false);
-  };
+      setIsLoading(false);
+    },
+    [setIsLoading, onSubmit, tags, resetForm]
+  );
 
   return (
     <div className="add-idea-form-container">

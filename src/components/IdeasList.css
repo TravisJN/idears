@@ -1,3 +1,9 @@
 .idea-item-text {
   white-space: pre-line;
 }
+
+.right-content-container {
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
