@@ -7,6 +7,7 @@ import {
   addDoc,
   serverTimestamp,
   writeBatch,
+  increment,
 } from "firebase/firestore";
 import { db } from "../firestore";
 
@@ -37,8 +38,8 @@ export function AddIdea({ userId }) {
 
       tags.forEach((tag) => {
         batch.set(doc(db, "tags", tag), {
-          created_at: serverTimestamp(),
-          count: 1,
+          updated_at: serverTimestamp(),
+          count: increment(1),
         });
       });
 
