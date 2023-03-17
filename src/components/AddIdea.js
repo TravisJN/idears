@@ -5,10 +5,8 @@ import {
   doc,
   collection,
   addDoc,
-  setDoc,
-  runTransaction,
   serverTimestamp,
-  arrayUnion,
+  writeBatch,
 } from "firebase/firestore";
 import { db } from "../firestore";
 
@@ -26,14 +24,25 @@ export function AddIdea({ userId }) {
         map[tag] = true;
         return map;
       }, {});
-      console.log(tagsMap);
-      // First add the idea doc
-      const ideaDoc = await addDoc(collection(db, "ideas"), {
+
+      await addDoc(collection(db, "ideas"), {
         text: idea,
         date: serverTimestamp(),
         author_id: userId,
         tags: tagsMap ?? {},
       });
+
+      // then we add the tag docs
+      const batch = writeBatch(db);
+
+      tags.forEach((tag) => {
+        batch.set(doc(db, "tags", tag), {
+          created_at: serverTimestamp(),
+          count: 1,
+        });
+      });
+
+      await batch.commit();
 
       return true;
     } catch (err) {

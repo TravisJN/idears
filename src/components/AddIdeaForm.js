@@ -1,13 +1,11 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Button, Form, Input } from "antd";
 import "./AddIdeaForm.css";
-import { AddTags } from "./AddTags";
+import { SelectTags } from "./SelectTags";
 
 const { TextArea } = Input;
 
 export function AddIdeaForm({ onSubmit, errorMessage, onResetForm }) {
-  let skipSubmit = useRef(false);
-
   const [isLoading, setIsLoading] = useState(false);
   const [tags, setTags] = useState([]);
   const [form] = Form.useForm();
@@ -19,11 +17,6 @@ export function AddIdeaForm({ onSubmit, errorMessage, onResetForm }) {
   };
 
   const handleSubmit = async ({ idea }) => {
-    if (skipSubmit.current) {
-      skipSubmit.current = false;
-      return;
-    }
-
     setIsLoading(true);
 
     const success = await onSubmit({ idea, tags });
@@ -33,20 +26,6 @@ export function AddIdeaForm({ onSubmit, errorMessage, onResetForm }) {
     }
 
     setIsLoading(false);
-  };
-
-  const onTagEnterPress = (newTag) => {
-    skipSubmit.current = true;
-    setTags([...tags, newTag]);
-  };
-
-  const onDeleteTag = (tag) => {
-    const newArray = [...tags];
-    const index = newArray.indexOf(tag);
-    if (index > -1) {
-      newArray.splice(index, 1);
-    }
-    setTags(newArray);
   };
 
   return (
@@ -74,11 +53,7 @@ export function AddIdeaForm({ onSubmit, errorMessage, onResetForm }) {
         </Form.Item>
 
         <Form.Item className="add-idea-form-input" name="tags">
-          <AddTags
-            onPressEnter={onTagEnterPress}
-            onDeleteTag={onDeleteTag}
-            tags={tags}
-          />
+          <SelectTags onTagsUpdate={setTags} tags={tags} />
         </Form.Item>
 
         <Form.Item>
