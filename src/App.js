@@ -45,6 +45,12 @@ function App() {
         ideasArray.push({ ...doc.data(), id: doc.id });
       });
 
+      // manually sort by date because firestore would require a composite index
+      // for every single tag if we query by tag and orderBy
+      if (tags?.length) {
+        ideasArray.sort((a, b) => b.date?.seconds - a.date?.seconds);
+      }
+
       setIdeas(ideasArray);
     };
 
@@ -55,7 +61,7 @@ function App() {
         return where(`tags.${tag}`, "==", true);
       });
 
-      q = query(q, ...whereArgs);
+      q = query(collection(db, COLLECTION), ...whereArgs);
     }
 
     fetchDocs(q);
