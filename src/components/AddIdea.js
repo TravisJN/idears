@@ -13,7 +13,7 @@ import { db } from "../firestore";
 
 const { Panel } = Collapse;
 
-export function AddIdea({ userId }) {
+export function AddIdea({ userId, onIdeaAdded }) {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const onSubmit = async (values) => {
@@ -44,6 +44,8 @@ export function AddIdea({ userId }) {
       });
 
       await batch.commit();
+
+      onIdeaAdded();
 
       return true;
     } catch (err) {
