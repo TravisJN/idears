@@ -1,5 +1,5 @@
-import { useCallback } from "react";
-import { List, Button, Popconfirm } from "antd";
+import { useCallback, useEffect, useState } from "react";
+import { List, Button, Popconfirm, Tag } from "antd";
 import { DeleteTwoTone } from "@ant-design/icons";
 import { db } from "../firestore";
 import {
@@ -9,18 +9,26 @@ import {
   orderBy,
   deleteDoc,
   doc,
+  where,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import * as dayjs from "dayjs";
 import "./IdeasList.css";
+
+const { CheckableTag } = Tag;
 
 const COLLECTION = "ideas";
 
 export function IdeasList({ userId }) {
   const [data, setData] = useState([]);
+  const [selectedTag, setSelectedTag] = useState(null);
 
   useEffect(() => {
-    const q = query(collection(db, COLLECTION), orderBy("date", "desc"));
+    let q = query(collection(db, COLLECTION), orderBy("date", "desc"));
+
+    if (selectedTag) {
+      q = query(q, where(`tags.${selectedTag}`, "==", true));
+    }
+
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const ideas = [];
       snapshot.forEach((doc) => {
@@ -30,17 +38,21 @@ export function IdeasList({ userId }) {
     });
 
     return unsubscribe;
+  }, [selectedTag]);
+
+  const handleDelete = useCallback(async (item) => {
+    try {
+      await deleteDoc(doc(db, COLLECTION, item.id));
+    } catch (err) {
+      alert(`Error deleting idea: ${err.message}`);
+    }
   }, []);
 
-  const handleDelete = useCallback(
-    async (item) => {
-      try {
-        await deleteDoc(doc(db, COLLECTION, item.id));
-      } catch (err) {
-        alert(`Error deleting idea: ${err.message}`);
-      }
+  const handleTagClick = useCallback(
+    (tag) => {
+      setSelectedTag(selectedTag === tag ? null : tag);
     },
-    [deleteDoc, db]
+    [selectedTag]
   );
 
   const renderListItem = useCallback(
@@ -52,7 +64,9 @@ export function IdeasList({ userId }) {
         <List.Item
           className="list-item-container"
           actions={tags.map((tag) => (
-            <p key={tag}>{tag}</p>
+            <CheckableTag key={tag} onClick={() => handleTagClick(tag)} className="tag">
+              {tag}
+            </CheckableTag>
           ))}
           key={item.id}
           extra={
@@ -79,7 +93,7 @@ export function IdeasList({ userId }) {
         </List.Item>
       );
     },
-    [userId, dayjs]
+    [userId, handleTagClick, handleDelete]
   );
 
   return (
