@@ -1,26 +1,26 @@
 .add-idea-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
 }
 
 .add-idea-form-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .add-idea-form-error-text {
-  color: red;
+    color: red;
 }
 
 .add-idea-form-input {
-  width: 100%;
+    width: 100%;
 }
 
 .add-idea-form-button {
-  margin-right: 20px;
+    margin-right: 20px;
 }

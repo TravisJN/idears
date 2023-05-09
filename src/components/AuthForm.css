@@ -1,21 +1,21 @@
 .login-form {
-  max-width: 300px;
+    max-width: 300px;
 }
 .login-form-forgot {
-  float: right;
+    float: right;
 }
 .ant-col-rtl .login-form-forgot {
-  float: left;
+    float: left;
 }
 .login-form-button {
-  width: 100%;
+    width: 100%;
 }
 .auth-form-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .auth-form-error-text {
-  color: red;
+    color: red;
 }
