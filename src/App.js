@@ -20,9 +20,10 @@ function App() {
 
     const location = useLocation();
 
-    const queryParams = new URLSearchParams(location.search);
-    const param1 = queryParams.get('param1');
-    const param2 = queryParams.get('param2');
+    // TODO: finish setting query param on filter set
+    // const queryParams = new URLSearchParams(location.search);
+    // const param1 = queryParams.get('param1');
+    // const param2 = queryParams.get('param2');
 
     useEffect(() => {
         const analytics = getAnalytics();

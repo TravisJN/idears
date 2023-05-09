@@ -22,5 +22,5 @@ export const analytics = getAnalytics(app);
 
 // Local emulators
 // Uncomment to use local emulators
-// connectFirestoreEmulator(db, 'localhost', 8080);
-// connectAuthEmulator(auth, 'http://localhost:9099');
+connectFirestoreEmulator(db, 'localhost', 8080);
+connectAuthEmulator(auth, 'http://localhost:9099');
