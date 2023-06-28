@@ -1,19 +1,19 @@
 import { useCallback } from 'react';
-import { List, Button, Popconfirm, Tag } from 'antd';
-import { DeleteTwoTone } from '@ant-design/icons';
+import { List, Tag } from 'antd';
 import { db } from '../firestore';
 import { deleteDoc, doc } from 'firebase/firestore';
 import * as dayjs from 'dayjs';
 import './IdeasList.css';
+import { Toolbar } from './Toolbar';
 
 const { CheckableTag } = Tag;
 
 const COLLECTION = 'ideas';
 
 export function IdeasList({ userId, onSelectTag, ideas, tags }) {
-    const handleDelete = useCallback(async (item) => {
+    const handleDelete = useCallback(async (itemId) => {
         try {
-            await deleteDoc(doc(db, COLLECTION, item.id));
+            await deleteDoc(doc(db, COLLECTION, itemId));
         } catch (err) {
             alert(`Error deleting idea: ${err.message}`);
         }
@@ -39,24 +39,11 @@ export function IdeasList({ userId, onSelectTag, ideas, tags }) {
                     ))}
                     key={item.id}
                     extra={
-                        <div className="right-content-container">
-                            {isAuthor && (
-                                <Popconfirm
-                                    title="Delete this idea?"
-                                    onConfirm={() => handleDelete(item)}
-                                    okText="Yes"
-                                    cancelText="No"
-                                >
-                                    <Button
-                                        shape="circle"
-                                        type="ghost"
-                                        className="delete-button"
-                                    >
-                                        <DeleteTwoTone twoToneColor="#eb2f96" />
-                                    </Button>
-                                </Popconfirm>
-                            )}
-                        </div>
+                        <Toolbar
+                            isAuthor={isAuthor}
+                            onDelete={handleDelete}
+                            itemId={item.id}
+                        />
                     }
                 >
                     <List.Item.Meta
