@@ -30,9 +30,15 @@ export function Toolbar({ isAuthor, onDelete, itemId }) {
                 <>
                     {isExpanded ? (
                         <>
-                            <Button className="delete-button" type="text">
-                                <EditOutlined twoToneColor="#eb2f96" />
-                            </Button>
+                            <Popconfirm
+                                title="I don't work yet"
+                                okText="OK"
+                                icon={null}
+                            >
+                                <Button className="delete-button" type="text">
+                                    <EditOutlined twoToneColor="#eb2f96" />
+                                </Button>
+                            </Popconfirm>
                             <Popconfirm
                                 title="Delete this idea?"
                                 onConfirm={() => onDelete(itemId)}
