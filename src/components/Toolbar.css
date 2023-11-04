@@ -1,0 +1,12 @@
+.button {
+    transition: transform 0.5s;
+    display: inline-block;
+}
+
+.button.rotate90 {
+    transform: rotate(90deg);
+}
+
+.button.rotate180 {
+    transform: rotate(180deg);
+}

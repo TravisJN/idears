@@ -5,23 +5,18 @@ import {
     EditOutlined,
     SettingOutlined,
 } from '@ant-design/icons';
+import './Toolbar.css';
 
 export function Toolbar({ isAuthor, onDelete, itemId }) {
-    const [isAnimating, setIsAnimating] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
+    const [rotation, setRotation] = useState(0);
+
+    const rotationClass =
+        rotation === 0 ? '' : rotation === 90 ? 'rotate90' : 'rotate180';
 
     const onSettingsClick = useCallback(() => {
         setIsExpanded(!isExpanded);
-
-        if (!isAnimating) {
-            setIsAnimating(true);
-
-            const animationTimer = setTimeout(() => {
-                setIsAnimating(false);
-            }, 250);
-
-            return animationTimer;
-        }
+        setRotation((prevRotation) => (prevRotation === 0 ? 90 : 0));
     });
 
     return (
@@ -51,15 +46,10 @@ export function Toolbar({ isAuthor, onDelete, itemId }) {
                             </Popconfirm>
                         </>
                     ) : null}
-                    <Button
-                        className="delete-button"
-                        type="text"
-                        onClick={onSettingsClick}
-                    >
-                        <SettingOutlined
-                            twoToneColor="#eb2f96"
-                            spin={isAnimating}
-                        />
+                    <Button type="text" onClick={onSettingsClick}>
+                        <div className={`button ${rotationClass}`}>
+                            <SettingOutlined twoToneColor="#eb2f96" />
+                        </div>
                     </Button>
                 </>
             ) : null}
