@@ -1,6 +1,22 @@
+.toolbar-container {
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: hidden;
+    height: 100%;
+}
+
+.button-background {
+    opacity: 100%;
+    background-color: white;
+    z-index: 2;
+}
+
 .button {
-    transition: transform 0.5s;
+    position: relative;
+    transition: transform 0.3s;
     display: inline-block;
+    z-index: 2;
 }
 
 .button.rotate90 {
@@ -9,4 +25,19 @@
 
 .button.rotate180 {
     transform: rotate(180deg);
+}
+
+.toolbar {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 100%;
+    left: 0;
+    right: 0;
+    transition: top 0.3s;
+    z-index: 1;
+}
+
+.visible {
+    top: 0;
 }

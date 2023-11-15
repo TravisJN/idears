@@ -14,6 +14,8 @@ export function Toolbar({ isAuthor, onDelete, itemId }) {
     const rotationClass =
         rotation === 0 ? '' : rotation === 90 ? 'rotate90' : 'rotate180';
 
+    const toolbarVisibleClass = isExpanded ? 'visible' : '';
+
     const onSettingsClick = useCallback(() => {
         setIsExpanded(!isExpanded);
         setRotation((prevRotation) => (prevRotation === 0 ? 90 : 0));
@@ -22,36 +24,36 @@ export function Toolbar({ isAuthor, onDelete, itemId }) {
     return (
         <div className="right-content-container">
             {isAuthor ? (
-                <>
-                    {isExpanded ? (
-                        <>
-                            <Popconfirm
-                                title="I don't work yet"
-                                okText="OK"
-                                icon={null}
-                            >
-                                <Button className="delete-button" type="text">
-                                    <EditOutlined twoToneColor="#eb2f96" />
-                                </Button>
-                            </Popconfirm>
-                            <Popconfirm
-                                title="Delete this idea?"
-                                onConfirm={() => onDelete(itemId)}
-                                okText="Yes"
-                                cancelText="No"
-                            >
-                                <Button className="delete-button" type="text">
-                                    <DeleteOutlined twoToneColor="#eb2f96" />
-                                </Button>
-                            </Popconfirm>
-                        </>
-                    ) : null}
-                    <Button type="text" onClick={onSettingsClick}>
-                        <div className={`button ${rotationClass}`}>
-                            <SettingOutlined twoToneColor="#eb2f96" />
-                        </div>
-                    </Button>
-                </>
+                <div className="toolbar-container">
+                    <div className="button-background">
+                        <Button type="text" onClick={onSettingsClick}>
+                            <div className={`button ${rotationClass}`}>
+                                <SettingOutlined twoToneColor="#eb2f96" />
+                            </div>
+                        </Button>
+                    </div>
+                    <div className={`toolbar ${toolbarVisibleClass}`}>
+                        <Popconfirm
+                            title="I don't work yet"
+                            okText="OK"
+                            icon={null}
+                        >
+                            <Button className="delete-button" type="text">
+                                <EditOutlined twoToneColor="#eb2f96" />
+                            </Button>
+                        </Popconfirm>
+                        <Popconfirm
+                            title="Delete this idea?"
+                            onConfirm={() => onDelete(itemId)}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <Button className="delete-button" type="text">
+                                <DeleteOutlined twoToneColor="#eb2f96" />
+                            </Button>
+                        </Popconfirm>
+                    </div>
+                </div>
             ) : null}
         </div>
     );
