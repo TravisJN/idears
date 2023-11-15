@@ -1,15 +1,13 @@
 .toolbar-container {
-    position: relative;
     display: flex;
     flex-direction: column-reverse;
-    overflow-y: hidden;
     height: 100%;
 }
 
-.button-background {
-    opacity: 100%;
-    background-color: white;
-    z-index: 2;
+.toolbar-content-container {
+    position: relative;
+    height: 100%;
+    overflow-y: hidden;
 }
 
 .button {
@@ -27,17 +25,17 @@
     transform: rotate(180deg);
 }
 
-.toolbar {
+.toolbar-content {
     position: absolute;
     display: flex;
     flex-direction: column;
-    top: 100%;
+    bottom: -200px;
     left: 0;
     right: 0;
-    transition: top 0.3s;
+    transition: bottom 0.3s;
     z-index: 1;
 }
 
 .visible {
-    top: 0;
+    bottom: 0px;
 }
