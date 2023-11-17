@@ -2,71 +2,51 @@
 
 A place to save your ideas and see other people's ideas.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React with firebase
 
-## Available Scripts
+## Development
 
-In the project directory, you can run:
+This project uses `yarn` but `npm` should work just as well
 
-### `npm start`
+### Install dependencies
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+`yarn`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+You will also need the [firebase emulator suite](https://firebase.google.com/docs/emulator-suite) installed if you want to use local firebase emulators (recommended)
 
-### `npm test`
+### Init firebase local emulators:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`yarn run emulators`
 
-### `npm run build`
+This script will export your firestore db and auth storage to `../exported` and will import it when initialized so your db and users are persisted
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Use local emulators:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Before running the app, uncomment the following lines in `firestore.js`:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+connectFirestoreEmulator(db, 'localhost', 8080);
+connectAuthEmulator(auth, 'http://localhost:9099');
+```
 
-### `npm run eject`
+This will cause the app to use the local emulators for reads and writes instead of the production server
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Run the app:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`yarn start`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Happy coding!
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Building and Deploying
 
-## Learn More
+### Build the app
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+`yarn run build`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This will build a new app bundle and save it to the `build` folder
 
-### Code Splitting
+### Deploy to outofinsight.com
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+`firebase deploy`
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The deploy script is configured to upload the contents of the `build` folder to firebase storage where it will it be served at [outofinsight.com](https://www.outofinsight.com)
