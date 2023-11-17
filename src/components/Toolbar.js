@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import { Button, Popconfirm } from 'antd';
 import {
     DeleteOutlined,
@@ -15,6 +15,12 @@ export function Toolbar({ isAuthor, onDelete, itemId }) {
         rotation === 0 ? '' : rotation === 90 ? 'rotate90' : 'rotate180';
 
     const toolbarVisibleClass = isExpanded ? 'visible' : '';
+    const toolbarAnimationSyle = useMemo(
+        () => ({
+            transition: isExpanded ? 'bottom 0.3s ease' : 'bottom 0.3s ease-in',
+        }),
+        [isExpanded]
+    );
 
     const onSettingsClick = useCallback(() => {
         setIsExpanded(!isExpanded);
@@ -33,6 +39,7 @@ export function Toolbar({ isAuthor, onDelete, itemId }) {
                     <div className="toolbar-content-container">
                         <div
                             className={`toolbar-content ${toolbarVisibleClass}`}
+                            style={toolbarAnimationSyle}
                         >
                             <Popconfirm
                                 title="I don't work yet"

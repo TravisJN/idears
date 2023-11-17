@@ -32,7 +32,6 @@
     bottom: -200px;
     left: 0;
     right: 0;
-    transition: bottom 0.3s;
     z-index: 1;
 }
 
