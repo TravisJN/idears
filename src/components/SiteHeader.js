@@ -10,7 +10,7 @@ export function SiteHeader({ user }) {
     return (
         <div className="header-container">
             <div className="header-title-container">
-                <p className="header-title">OutofinsighT</p>
+                <p className="header-title">outofinsight</p>
             </div>
             <div className="header-button-container">
                 {isAbout ? (
